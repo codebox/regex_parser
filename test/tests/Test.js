@@ -325,4 +325,23 @@ describe("Test", function () {
             testRegex('\\D', ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], false);
         });
     });
+
+    function expectError(regexText, consumed){
+        expect(function(){
+                parser.compile(regexText)
+            }).toThrow('Unable to parse regex, consumed "' + consumed + '"')
+    }
+
+    describe("Invalid Regexes", function(){
+        it("Throw Errors", function(){
+            expectError('*', '');
+            expectError('abc[]', 'abc');
+            expectError('abc[xyz', 'abc');
+            expectError('+++', '');
+            expectError('a(', 'a');
+            expectError('abc[^]', 'abc');
+            expectError('a{z}', 'a');
+            expectError('a{1,x}', 'a');
+        })
+    });
 });
