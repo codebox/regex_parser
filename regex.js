@@ -68,7 +68,8 @@ function regex(parseTreeRootNode) {
             return {
                 matchSet : matchSet,
                 allTextMatched : allTextMatched,
-                allMatchersMatched : allMatchersMatched
+                allMatchersMatched : allMatchersMatched,
+                matches : allTextMatched && allMatchersMatched
             };
         }
     };

@@ -9,8 +9,7 @@ describe("Test", function () {
         var regex = parser.compile(regexText);
         textArray.forEach(function (txt) {
             var match = regex.match(txt);
-            var matched = match.allMatchersMatched && match.allTextMatched;
-            expect(matched).toBe(expectedResult);
+            expect(match.matches).toBe(expectedResult);
         });
     }
 

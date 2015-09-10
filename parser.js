@@ -91,7 +91,7 @@ var parser = (function (grammar) {
         compile : function(regexText){
             var ssn = grammar.startSymbolName;
             var rootNode = grammar.productionRules.get(ssn).consume(regexText);
-            console.log(rootNode.toString())
+            //console.log(rootNode.toString())
             if (rootNode.text != regexText){
                 throw 'Unable to parse regex, consumed "' + rootNode.text + '"'
             }
