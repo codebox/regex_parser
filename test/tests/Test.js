@@ -1,17 +1,46 @@
 describe("Test", function () {
-    function testRegex(regexText, text, expectedResult) {
-        var textArray;
+
+    function testRegex(regexText, text, expectedResult, allTextMatched = true) {
+        let textArray;
         if (Array.isArray(text)) {
             textArray = text;
         } else {
             textArray = [text];
         }
-        var regex = parser.compile(regexText);
+        const regex = parser.compile(regexText);
+
         textArray.forEach(function (txt) {
-            var match = regex.match(txt);
-            expect(match.matches).toBe(expectedResult);
+            const match = regex.match(txt);
+            expect( allTextMatched ? match.matches : match.allMatchersMatched).toBe(expectedResult);
         });
     }
+
+    describe("Start End", function () {
+        describe("Matches", function () {
+			it("Both", function () {
+				testRegex('^ab$', ['ab'], true);
+			});
+			it("Start", function () {
+				testRegex('^ab', ['ab', 'abc'], true, false);
+			});
+			it("End", function () {
+				testRegex('ab$', ['ab'], true);
+				testRegex('.*ab$', ['cab'], true);
+			});
+        });
+        describe("Mismatches", function () {
+			it("Both", function () {
+				testRegex('^ab$', ['a', 'b', 'ac', 'd'], false);
+			});
+			it("Start", function () {
+				testRegex('^ab', ['a', 'b', 'ac', 'bc'], false);
+			});
+			it("End", function () {
+				testRegex('ab$', ['acb', 'a', 'ba'], false);
+				testRegex('.*ab$', ['caxb'], false);
+			});
+        });
+    });
 
     describe("Literals", function () {
         describe("Matches", function () {
@@ -83,6 +112,10 @@ describe("Test", function () {
             });
             it("multiples", function () {
                 testRegex('[a]b[c-f]', ['abc', 'abd', 'abe', 'abf'], true);
+            });
+            it("meta-characters", function () {
+                testRegex('[-+]', ['+', '-'], true);
+                testRegex('[\-\+\\\\]', ['+', '-','\\'], true);
             });
         });
         describe("Mismatches", function () {
