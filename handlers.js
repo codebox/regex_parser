@@ -302,6 +302,7 @@ var handlers = (function () {
         "EXCLUSIVE_CHAR_LIST": buildExclusiveCharListMatcher,
         "RANGE": buildRangeMatcher,
         "NON_META_CHAR": buildLiteralMatcher,
+        "NON_META_CHAR_LIST": buildLiteralMatcher,
         "PARENS" : buildParensMatcher,
         "BACKREF" : buildBackRefHandler,
         "WHITESPACE" : buildWhitespaceHandler,
